@@ -23,13 +23,22 @@ public class JwtService {
 
     ;
 
-    public String generateJwtToken(User user) {
+    public String generateJwtAccessToken(User user) {
         return Jwts.builder()
                 .subject(user.getId().toString())
                 .claim("email", user.getEmail())
                 .claim("roles", Set.of("USER"))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .signWith(getSecretKey())
+                .compact();
+    }
+
+    public String generateJwtRefreshToken(User user) {
+        return Jwts.builder()
+                .subject(user.getId().toString())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30 * 6))
                 .signWith(getSecretKey())
                 .compact();
     }

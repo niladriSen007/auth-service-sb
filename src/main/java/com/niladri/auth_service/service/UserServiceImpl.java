@@ -6,6 +6,7 @@ import com.niladri.auth_service.entity.User;
 import com.niladri.auth_service.mapper.ModelMapper;
 import com.niladri.auth_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserDetailsService {
     }
 
     public UserResponseDto signup(SignupDto signupDto) {
+
+        log.info("Inside signup method");
 
         //check if the user is already present in the database or not
         if (userRepository.findByEmail(signupDto.getEmail()).isPresent()) {
