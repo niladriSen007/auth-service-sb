@@ -44,5 +44,12 @@ public class UserServiceImpl implements UserDetailsService {
         return ModelMapper.mapToUserResponseDto(userRepository.save(ModelMapper.mapToUser(signupDto)));
     }
 
+    public User loadUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new BadCredentialsException("User not found"));
+    }
 
+
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
 }

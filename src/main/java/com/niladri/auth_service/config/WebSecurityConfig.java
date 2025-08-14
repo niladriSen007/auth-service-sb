@@ -1,6 +1,7 @@
 package com.niladri.auth_service.config;
 
 import com.niladri.auth_service.filter.JwtAuthFilter;
+import com.niladri.auth_service.handler.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     private static final String[] publicRoutes = {
             "/error", "/auth/signup", "/auth/login"
@@ -41,6 +43,10 @@ public class WebSecurityConfig {
                         SessionCreationPolicy.STATELESS
                 ))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth2config->oauth2config.
+                        failureUrl("/login?error=true")
+                        .successHandler(oAuth2SuccessHandler)
+                    )
         ;
         return http.build();
     }

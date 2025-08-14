@@ -1,4 +1,11 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 550695146264-9s0vn0666brmmbl4lkll80an0boq1j8o.apps.googleusercontent.com
+            client-secret: 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
   application:
     name: auth-service
   datasource:
