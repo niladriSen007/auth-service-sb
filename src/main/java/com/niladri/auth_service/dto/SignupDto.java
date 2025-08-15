@@ -1,10 +1,13 @@
 package com.niladri.auth_service.dto;
 
+import com.niladri.auth_service.entity.ROLE;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,4 +23,7 @@ public class SignupDto {
     @NotBlank(message = "Name is required")
     @Size(min = 2, message = "Name must be at least 2 characters long")
     private String name;
+
+    @NotBlank
+    private Set<ROLE> roles;
 }

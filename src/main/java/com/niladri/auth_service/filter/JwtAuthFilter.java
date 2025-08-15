@@ -59,7 +59,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 User user = userServiceImpl.getUserDetailsById(userId);
                 //create a new authentication object using Usernamepasswordauthenticationtoken class/provider
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(user, null, null);
+                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
                 // this will contain the user ip address, session id etc. that can be used in rate-limiting DDos attack
                 usernamePasswordAuthenticationToken.setDetails(
